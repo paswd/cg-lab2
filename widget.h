@@ -1,31 +1,28 @@
 #ifndef WIDGET_H
 #define WIDGET_H
 
-#include <QWidget>
+#include <QtGui>
 #include <QGLWidget>
-
-namespace Ui {
-class Widget;
-}
 
 class Widget : public QGLWidget
 {
-    Q_OBJECT
-
 public:
-    //explicit Widget(QWidget *parent = 0);
-
     Widget(QWidget *parent = 0);
-    ~Widget();
 
+protected:
     void initializeGL();
-
     void resizeGL(int nWidth, int nHeight);
-
-    void paintGL(); // рисование
+    void paintGL();
+    void mousePressEvent(QMouseEvent* pe);
+    void mouseMoveEvent(QMouseEvent* pe);
+    void mouseReleaseEvent(QMouseEvent* pe);
+    void wheelEvent(QWheelEvent *);
 
 private:
-    Ui::Widget *ui;
+    int xRotation,yRotation,zRotation,scale;
+    QPoint mousePos;
+    qreal currentScale;
+    void drawAxis();
 };
 
 #endif // WIDGET_H

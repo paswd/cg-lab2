@@ -1,45 +1,188 @@
 #include "widget.h"
-#include "ui_widget.h"
 
-Widget::Widget(QWidget *parent) // ĞºĞ¾Ğ½ÑÑ‚Ñ€ÑƒĞºÑ‚Ğ¾Ñ€
-    : QGLWidget(parent)
+Widget::Widget(QWidget *parent)
+        : QGLWidget(parent)
 {
-    resize(300,300); // Ğ·Ğ°Ğ´Ğ°ĞµĞ¼ Ñ€Ğ°Ğ·Ğ¼ĞµÑ€Ñ‹ Ğ¾ĞºĞ½Ğ°
-}
-Widget::~Widget() {
-
+    resize(300,300);
+    xRotation = 0;
+    yRotation = 0;
+    zRotation = 0;
+    scale = 1;
 }
 
 void Widget::initializeGL()
 {
-   qglClearColor(Qt::white); // Ğ·Ğ°Ğ¿Ğ¾Ğ»Ğ½ÑĞµĞ¼ ÑĞºÑ€Ğ°Ğ½ Ğ±ĞµĞ»Ñ‹Ğ¼ Ñ†Ğ²ĞµÑ‚Ğ¾Ğ¼
-   glEnable(GL_DEPTH_TEST); // Ğ·Ğ°Ğ´Ğ°ĞµĞ¼ Ğ³Ğ»ÑƒĞ±Ğ¸Ğ½Ñƒ Ğ¿Ñ€Ğ¾Ğ²ĞµÑ€ĞºĞ¸ Ğ¿Ğ¸ĞºÑĞµĞ»ĞµĞ¹
-   glShadeModel(GL_FLAT); // ÑƒĞ±Ğ¸Ñ€Ğ°ĞµĞ¼ Ñ€ĞµĞ¶Ğ¸Ğ¼ ÑĞ³Ğ»Ğ°Ğ¶Ğ¸Ğ²Ğ°Ğ½Ğ¸Ñ Ñ†Ğ²ĞµÑ‚Ğ¾Ğ²
-   glEnable(GL_CULL_FACE); // Ğ³Ğ¾Ğ²Ğ¾Ñ€Ğ¸Ğ¼, Ñ‡Ñ‚Ğ¾ Ğ±ÑƒĞ´ĞµĞ¼ ÑÑ‚Ñ€Ğ¾Ğ¸Ñ‚ÑŒ Ñ‚Ğ¾Ğ»ÑŒĞºĞ¾ Ğ²Ğ½ĞµÑˆĞ½Ğ¸Ğµ Ğ¿Ğ¾Ğ²ĞµÑ€Ñ…Ğ½Ğ¾ÑÑ‚Ğ¸
-   glPolygonMode(GL_FRONT_AND_BACK,GL_FILL); // Ñ„Ğ¸Ğ³ÑƒÑ€Ñ‹ Ğ±ÑƒĞ´ÑƒÑ‚ Ğ·Ğ°ĞºÑ€Ğ°ÑˆĞµĞ½Ñ‹ Ñ Ğ¾Ğ±ĞµĞ¸Ñ… ÑÑ‚Ğ¾Ñ€Ğ¾Ğ½
+    qglClearColor(Qt::white);
+    glEnable(GL_DEPTH_TEST);
+    glShadeModel(GL_FLAT);
+    glEnable(GL_CULL_FACE);
+    glPolygonMode(GL_FRONT_AND_BACK,GL_FILL);
 }
 
 void Widget::resizeGL(int nWidth, int nHeight)
 {
-    glViewport(0, 0, nHeight, nHeight); // ÑƒÑÑ‚Ğ°Ğ½Ğ¾Ğ²ĞºĞ° Ñ‚Ğ¾Ñ‡ĞºĞ¸ Ğ¾Ğ±Ğ·Ğ¾Ñ€Ğ°
-    glMatrixMode(GL_PROJECTION); // ÑƒÑÑ‚Ğ°Ğ½Ğ¾Ğ²ĞºĞ° Ñ€ĞµĞ¶Ğ¸Ğ¼Ğ° Ğ¼Ğ°Ñ‚Ñ€Ğ¸Ñ†Ñ‹
-    glLoadIdentity(); // Ğ·Ğ°Ğ³Ñ€ÑƒĞ·ĞºĞ° Ğ¼Ğ°Ñ‚Ñ€Ğ¸Ñ†Ñ‹
+    glViewport(0, 0, nHeight, nHeight);
+    glMatrixMode(GL_PROJECTION);
+    glLoadIdentity();
 }
 
-void Widget::paintGL() // Ñ€Ğ¸ÑĞ¾Ğ²Ğ°Ğ½Ğ¸Ğµ
+void Widget::paintGL() // ğèñîâàíèå
 {
-   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); // Ğ¾Ñ‡Ğ¸ÑÑ‚ĞºĞ° ÑĞºÑ€Ğ°Ğ½Ğ°
-   glMatrixMode(GL_MODELVIEW); // Ğ·Ğ°Ğ´Ğ°ĞµĞ¼ Ğ¼Ğ¾Ğ´ĞµĞ»ÑŒĞ½Ğ¾-Ğ²Ğ¸Ğ´Ğ¾Ğ²ÑƒÑ Ğ¼Ğ°Ñ‚Ñ€Ğ¸Ñ†Ñƒ
-   glLoadIdentity();           // Ğ·Ğ°Ğ³Ñ€ÑƒĞ·ĞºĞ° ĞµĞ´Ğ¸Ğ½Ğ¸Ñ‡Ğ½ÑƒÑ Ğ¼Ğ°Ñ‚Ñ€Ğ¸Ñ†Ñƒ
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); // î÷èñòêà áóôåğà èçîáğàæåíèÿ è ãëóáèíû
 
-   QColor halfGreen(0, 128, 0, 255); // ÑƒÑÑ‚Ğ°Ğ½Ğ°Ğ²Ğ»Ğ¸Ğ²Ğ°ĞµĞ¼ Ñ†Ğ²ĞµÑ‚ ĞºĞ²Ğ°Ğ´Ñ€Ğ°Ñ‚Ğ°
-   qglColor(halfGreen); // Ğ·Ğ°Ğ´Ğ°ĞµĞ¼ Ñ†Ğ²ĞµÑ‚
-   glBegin(GL_QUADS); // Ğ³Ğ¾Ğ²Ğ¾Ñ€Ğ¸Ğ¼, Ñ‡Ñ‚Ğ¾ Ñ€Ğ¸ÑĞ¾Ğ²Ğ°Ñ‚ÑŒ Ğ±ÑƒĞ´ĞµĞ¼ Ğ¿Ñ€ÑĞ¼Ğ¾ÑƒĞ³Ğ¾Ğ»ÑŒĞ½Ğ¸Ğº
-   // Ğ·Ğ°Ğ´Ğ°ĞµĞ¼ Ğ²ĞµÑ€ÑˆĞ¸Ğ½Ñ‹ Ğ¼Ğ½Ğ¾Ğ³Ğ¾ÑƒĞ³Ğ¾Ğ»ÑŒĞ½Ğ¸ĞºĞ°
-   glVertex3f(0.5, 0.5, 0.5);
-   glVertex3f(-0.5, 0.5, 0.5);
-   glVertex3f(-0.5, -0.5, 0.5);
-   glVertex3f(0.5, -0.5, 0.5);
-   glEnd();
+    glMatrixMode(GL_MODELVIEW); // óñòàíàâëèâàåò ïîëîæåíèå è îğèåíòàöèş ìàòğèöå ìîäåëèğîâàíèÿ
+    glLoadIdentity();           // çàãğóæàåò åäèíè÷íóş ìàòğèöó ìîäåëèğîâàíèÿ
 
+    glScalef(scale, scale, scale);        // ìàñøòàáèğîâàíèå
+    glRotatef(xRotation, 1.0f, 0.0f, 0.0f); // ïîâîğîò ïî X
+    glRotatef(yRotation, 0.0f, 1.0f, 0.0f); // ïîâîğîò ïî Y
+    glRotatef(zRotation, 0.0f, 0.0f, 1.0f); // ïîâîğîò ïî Z
+
+    //drawAxis();
+
+    QColor clr(128, 128, 0, 255);
+    QColor clr_lines(0, 0, 0, 255);
+    qglColor(clr);
+    currentScale = .3;
+    qreal big_scale = currentScale * 1.6;
+    glBegin(GL_QUADS); //Top
+        glVertex3f(currentScale, currentScale, currentScale);
+        glVertex3f(-currentScale, currentScale, currentScale);
+        glVertex3f(-currentScale, -currentScale, currentScale);
+        glVertex3f(currentScale, -currentScale, currentScale);
+    glEnd();
+
+    glBegin(GL_QUADS); //Bottom
+        glVertex3f(big_scale, big_scale, -currentScale);
+        glVertex3f(big_scale, -big_scale, -currentScale);
+        glVertex3f(-big_scale, -big_scale, -currentScale);
+        glVertex3f(-big_scale, big_scale, -currentScale);
+    glEnd();
+
+    glBegin(GL_QUADS); //Side1
+        glVertex3f(big_scale, -big_scale, -currentScale);
+        glVertex3f(big_scale, big_scale, -currentScale);
+        glVertex3f(currentScale, currentScale, currentScale);
+        glVertex3f(currentScale, -currentScale, currentScale);
+    glEnd();
+
+    glBegin(GL_QUADS); //Side2
+        glVertex3f(-big_scale, -big_scale, -currentScale);
+        glVertex3f(big_scale, -big_scale, -currentScale);
+        glVertex3f(currentScale, -currentScale, currentScale);
+        glVertex3f(-currentScale, -currentScale, currentScale);
+    glEnd();
+
+    glBegin(GL_QUADS); //Side3
+        glVertex3f(-big_scale, big_scale, -currentScale);
+        glVertex3f(-big_scale, -big_scale, -currentScale);
+        glVertex3f(-currentScale, -currentScale, currentScale);
+        glVertex3f(-currentScale, currentScale, currentScale);
+    glEnd();
+
+    glBegin(GL_QUADS); //Side4
+        glVertex3f(-currentScale, currentScale, currentScale);
+        glVertex3f(currentScale, currentScale, currentScale);
+        glVertex3f(big_scale, big_scale, -currentScale);
+        glVertex3f(-big_scale, big_scale, -currentScale);
+    glEnd();
+
+    //LINES
+    qglColor(clr_lines);
+    glBegin(GL_LINES); //Top
+        glVertex3f(currentScale, currentScale, currentScale);
+        glVertex3f(-currentScale, currentScale, currentScale);
+        glVertex3f(-currentScale, -currentScale, currentScale);
+        glVertex3f(currentScale, -currentScale, currentScale);
+    glEnd();
+
+    glBegin(GL_LINES); //Bottom
+        glVertex3f(big_scale, big_scale, -currentScale);
+        glVertex3f(big_scale, -big_scale, -currentScale);
+        glVertex3f(-big_scale, -big_scale, -currentScale);
+        glVertex3f(-big_scale, big_scale, -currentScale);
+    glEnd();
+
+    glBegin(GL_LINES); //Side1
+        glVertex3f(big_scale, -big_scale, -currentScale);
+        glVertex3f(big_scale, big_scale, -currentScale);
+        glVertex3f(currentScale, currentScale, currentScale);
+        glVertex3f(currentScale, -currentScale, currentScale);
+    glEnd();
+
+    glBegin(GL_LINES); //Side2
+        glVertex3f(-big_scale, -big_scale, -currentScale);
+        glVertex3f(big_scale, -big_scale, -currentScale);
+        glVertex3f(currentScale, -currentScale, currentScale);
+        glVertex3f(-currentScale, -currentScale, currentScale);
+    glEnd();
+
+    glBegin(GL_LINES); //Side3
+        glVertex3f(-big_scale, big_scale, -currentScale);
+        glVertex3f(-big_scale, -big_scale, -currentScale);
+        glVertex3f(-currentScale, -currentScale, currentScale);
+        glVertex3f(-currentScale, currentScale, currentScale);
+    glEnd();
+
+    glBegin(GL_LINES); //Side4
+        glVertex3f(-currentScale, currentScale, currentScale);
+        glVertex3f(currentScale, currentScale, currentScale);
+        glVertex3f(big_scale, big_scale, -currentScale);
+        glVertex3f(-big_scale, big_scale, -currentScale);
+    glEnd();
+
+
+}
+
+void Widget::mousePressEvent(QMouseEvent* pe) // íàæàòèå êëàâèøè ìûøè
+{
+    // çàïîìèíàåì êîîğäèíàòó íàæàòèÿ ìûøè
+    mousePos = pe->pos();
+}
+
+void Widget::mouseMoveEvent(QMouseEvent* pe) // èçìåíåíèå ïîëîæåíèÿ ñòğåëêè ìûøè
+{
+    xRotation += 180/scale*(GLfloat)(pe->y()-mousePos.y())/height(); // âû÷èñëÿåì óãëû ïîâîğîòà
+    zRotation += 180/scale*(GLfloat)(pe->x()-mousePos.x())/width();
+
+    mousePos = pe->pos();
+
+    updateGL(); // îáíîâëÿåì èçîáğàæåíèå
+}
+
+void Widget::mouseReleaseEvent(QMouseEvent *pe)
+{
+}
+
+void Widget::drawAxis()
+{
+    glLineWidth(3.0f); // óñòàíàâëèâàåì øèğèíó ëèíèè
+
+    glColor4f(1.00f, 0.00f, 0.00f, 1.0f); // óñòàíàâëèâàåòñÿ öâåò ïîñëåäóşùèõ ëèíèé
+    // îñü x
+    glBegin(GL_LINES); // ïîñòğîåíèå ëèíèè
+        glVertex3f( 1.0f,  0.0f,  0.0f); // ïåğâàÿ òî÷êà
+        glVertex3f(-1.0f,  0.0f,  0.0f); // âòîğàÿ òî÷êà
+    glEnd();
+
+    QColor halfGreen(0, 128, 0, 255);
+    qglColor(halfGreen);
+    glBegin(GL_LINES);
+        // îñü y
+        glVertex3f( 0.0f,  1.0f,  0.0f);
+        glVertex3f( 0.0f, -1.0f,  0.0f);
+
+        glColor4f(0.00f, 0.00f, 1.00f, 1.0f);
+        // îñü z
+        glVertex3f( 0.0f,  0.0f,  1.0f);
+        glVertex3f( 0.0f,  0.0f, -1.0f);
+    glEnd();
+}
+
+void Widget::wheelEvent(QWheelEvent* pe) // âğàùåíèå êîë¸ñèêà ìûøè
+{
+    // åñëè êîëåñèêî âğàùàåì âïåğåä -- óìíîæàåì ïåğåìåííóş ìàñøòàáà íà 1.1
+    // èíà÷å -- äåëèì íà 1.1
+    if ((pe->delta())>0) scale*=1.1; else if ((pe->delta())<0) scale/=1.1;
+        updateGL();
 }
